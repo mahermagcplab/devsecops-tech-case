@@ -1,0 +1,39 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Add docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Install docker
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - docker-containerd
+        - docker-runc
+        - docker.io
+        - docker
+
+    - name: Set docker logging driver
+      template:
+        src: daemon_config.j2
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: Docker service start
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
