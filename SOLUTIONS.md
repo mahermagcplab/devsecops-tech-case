@@ -9,6 +9,7 @@ Describe solutions for each exercise of the [DevSecOps&#32;tech&#32;case.pdf](./
 The solutions were deployed and tested using the following sw/tools:
 
 - Docker:   `v20.10.21`
+- Ansible:  `v2.11.12`
 - kubectl:  `v1.26.1`
 - Minikube: `v1.32.0`
 - Kubernetes: `v1.28.3`
